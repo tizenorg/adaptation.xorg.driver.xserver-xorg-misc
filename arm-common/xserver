@@ -1,0 +1,53 @@
+#!/bin/sh
+
+set -e
+
+export DISPLAY=:0
+export PATH=/bin:/usr/bin/:/sbin:/usr/sbin
+
+case "$1" in
+  start)
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
+    if [ "${is_running}" = "" ]; then                          
+        echo "Starting Xorg server..."
+        /usr/bin/startx
+    else
+        echo "Xorg server is running already..."
+    fi
+  ;;
+
+  restart|reload|force-reload)
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true                
+    if [ "${is_running}" != "" ]; then                                           
+        $0 stop || true
+        sleep 3
+    fi
+    $0 start || true
+  ;;
+
+  stop)
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
+    if [ "${is_running}" != "" ]; then                        
+        echo "Stopping Xorg server..."
+        killall -9 Xorg
+    else
+        echo "Xorg server is not running..."
+    fi
+  ;;
+
+  status)
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
+    if [ "${is_running}" = "" ]; then
+        echo "Xorg server is not running..."
+    else
+        echo "Xorg server is running..."
+    fi
+  ;;
+
+  *)
+    echo "Usage: /etc/init.d/xserver {start|stop|status|restart|reload|force-reload}"
+    exit 1
+    ;;
+esac
+
+exit 0

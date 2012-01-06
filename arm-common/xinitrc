@@ -1,0 +1,34 @@
+#!/bin/sh
+
+/usr/bin/scim -d
+
+if [ ! -e /opt/etc/.hib_capturing ]; then
+	/usr/bin/system_server &
+fi
+
+# Link .e
+if [ ! -d ${HOME}/.e ]; then
+	ln -s /opt/home/root/.e ${HOME}/.e
+fi
+
+udevadm trigger --subsystem-match=input
+
+# Remapping the keycodes to our key-symbols
+if [ -x /usr/bin/xmodmap ]; then
+	if [ -e ~/.Xmodmap ]; then
+		xmodmap ~/.Xmodmap
+	else
+		xmodmap /opt/etc/X11/Xmodmap
+	fi
+fi
+
+# set dpi
+if [ -x /usr/bin/xrdb ]; then
+	if [ -e ~/.Xresources ]; then
+		/usr/bin/xrdb -load -nocpp ~/.Xresources
+	else
+		/usr/bin/xrdb -load -nocpp /opt/etc/X11/Xresources
+	fi
+fi
+
+/usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &

@@ -1,0 +1,54 @@
+#!/bin/sh
+
+DISPLAY=":0"
+LOGDIR="/opt/var/log"
+XORG_CONF=" -config @DATADIR@/etc/X11/xorg.conf -configdir /opt/etc/X11/xorg.conf.d "
+OTHER_OPTIONS=" -logfile ${LOGDIR}/Xorg.0.log -ac -noreset -r +accessx 0 "
+
+udevadm trigger --subsystem-match=drm &
+udevadm trigger --subsystem-match=input &
+
+#check the existence of LOGDIR, if not create LOGDIR
+if [ ! -d ${LOGDIR} ]; then
+	mkdir -p ${LOGDIR}
+fi
+
+#backup previous Xorg.0.log file
+if [ -e ${LOGDIR}/Xorg.0.log ]; then
+	mv ${LOGDIR}/Xorg.0.log ${LOGDIR}/prev.Xorg.0.log
+fi
+
+#backup previous Xorg.0.log.old file
+if [ -e ${LOGDIR}/Xorg.0.log.old ]; then
+	mv ${LOGDIR}/Xorg.0.log.old ${LOGDIR}/prev.Xorg.0.log.old
+fi
+		
+if [ ! -e /opt/etc/X11/xorg.conf.d ]; then
+	ln -s /opt/etc/X11/xorg.conf.d.default /opt/etc/X11/xorg.conf.d
+fi
+
+if [ -e ~/.xinitrc ]; then
+	XINITRC=~/.xinitrc
+else
+	XINITRC=@PREFIX@/etc/X11/xinitrc
+fi
+
+XSERVER_OPTIONS=" ${DISPLAY} ${OTHER_OPTIONS} ${XORG_CONF} "
+
+if [ "$1" = "--gdb" ]; then
+	if [ -x /usr/bin/pvrsrvinit ]; then         
+		pvrsrvinit start                    
+	fi
+	gdb --args Xorg ${XSERVER_OPTIONS}
+else    
+	if [ "$1" = "--only" ]; then
+		if [ -x /usr/bin/pvrsrvinit ]; then
+			pvrsrvinit start
+		fi
+
+		Xorg ${XSERVER_OPTIONS} &
+	else
+		xinit ${XINITRC} -- @PREFIX@/bin/Xorg ${XSERVER_OPTIONS} &
+	fi
+fi    
+

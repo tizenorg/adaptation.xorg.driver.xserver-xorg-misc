@@ -1,0 +1,11 @@
+keycode 123 = XF86AudioRaiseVolume
+keycode 122 = XF86AudioLowerVolume
+keycode 231 = XF86Standby
+keycode 177 = XF86Send
+keycode 140 = XF86Phone
+keycode 182 = XF86Stop
+keycode 124 = XF86PowerOff
+keycode 179 = XF86WebCam
+keycode 220 = XF86Pictures
+keycode 153 = 
+keycode 239 = 

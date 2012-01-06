@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Remapping the keycodes to our key-symbols
+if [ -x /usr/bin/xmodmap ]; then
+	if [ -f /root/.xmodmap ]; then
+		xmodmap /root/.xmodmap
+	else
+		xmodmap - < /opt/etc/X11/Xmodmap
+	fi
+fi
+
+/usr/bin/scim -d
+/usr/bin/system_server &
+
+# Link .e
+if [ ! -d ${HOME}/.e ]; then
+	ln -s /opt/home/root/.e ${HOME}/.e
+fi
+
+# set dpi
+if [ -x /usr/bin/xrdb ]; then
+	if [ -e ~/.Xresources ]; then
+		/usr/bin/xrdb -load -nocpp ~/.Xresources
+	else
+		/usr/bin/xrdb -load -nocpp /opt/etc/X11/Xresources
+	fi
+fi
+
+/usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &

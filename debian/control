@@ -1,0 +1,15 @@
+Source: xserver-xorg-misc
+Section: x11
+Priority: optional
+Maintainer: Sung-Jin Park <sj76.park@samsung.com>, SooChan Lim <sc1.lim@samsung.com>, Doyoun Kang <doyoun.kang@samsung.com>, Sangjin Lee <lsj119@samsung.com>, Boram Park <boram1288.park@samsung.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 0.0.1
+
+Package: xserver-xorg-misc-emulfb
+Section: x11
+Architecture: any
+Conflicts: xserver-xorg-misc
+Replaces: xserver-xorg-misc
+Depends: ${shlibs:Depends}, ${misc:Depends},  xserver-xorg-core (>= 1.7.1)
+Description: Xorg server misc package which contains startx, xinitrc and xorg.conf file for emulfb
+
