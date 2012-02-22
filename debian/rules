@@ -110,6 +110,7 @@ install-common:
 	ln -s /etc/rc.d/init.d/xresources $(CURDIR)/debian/tmp/etc/rc.d/rc3.d/S80xresources
 	ln -s /etc/rc.d/init.d/xresources $(CURDIR)/debian/tmp/etc/rc.d/rc4.d/S80xresources
 	cp -af $(CURDIR)/$(ARCH_COMMON)/Xorg.sh $(CURDIR)/debian/tmp/etc/profile.d/
+	-cp -af $(CURDIR)/$(ARCH_COMMON)/Xmodmap $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
 
 install-emulfb: build-emulfb install-common
 	-cp -af $(CURDIR)/$(ARCH)-emulfb/* $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
