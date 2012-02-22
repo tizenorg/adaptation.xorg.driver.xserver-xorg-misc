@@ -58,6 +58,7 @@ ln -s /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc4.d/S20xserver
 ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc3.d/S80xresources
 ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc4.d/S80xresources
 cp -af arm-common/Xorg.sh %{buildroot}/etc/profile.d/
+cp -af arm-common/Xmodmap %{buildroot}/opt/etc/X11/
 
 cp -rf arm-emulfb %{buildroot}/opt/etc/X11/
 
@@ -77,6 +78,7 @@ rm -f /opt/etc/X11/xorg.conf.d.*
 %attr(-,5000,5000) /opt/etc/X11/Xresources
 /opt/etc/X11/xorg.conf
 %{_prefix}/etc/X11/xinitrc
+/opt/etc/X11/arm-common/Xmodmap
 /opt/etc/X11/arm-emulfb/xorg.conf.d.*/*.conf
 %{_bindir}/setcpu
 %{_bindir}/setpoll
