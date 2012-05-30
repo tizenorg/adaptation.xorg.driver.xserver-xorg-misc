@@ -13,6 +13,7 @@ Release:    1
 Group:      System/X11
 License:    MIT
 Source0:    %{name}-%{version}.tar.gz
+Source1001: packaging/xorg-x11-server-misc.manifest 
 
 %description
 Description: %{summary}
@@ -32,6 +33,7 @@ Xorg server misc package which contains startx, xinitrc and xorg.conf file for e
 
 
 %build
+cp %{SOURCE1001} .
 for f in `find %{ARCH}-common/ -name "*.in"`; do
         cat $f > ${f%.in};
         sed -i -e "s#@PREFIX@#/usr#g" ${f%.in};
@@ -82,6 +84,7 @@ rm -f /opt/etc/X11/xorg.conf.d.*
 chown -R 5000:5000 /opt/etc/X11/Xresources
 
 %files emulfb
+%manifest xorg-x11-server-misc.manifest
 /opt/etc/X11/xorg.conf.d
 %{_sysconfdir}/profile.d/Xorg.sh
 %{_sysconfdir}/rc.d/init.d/*
