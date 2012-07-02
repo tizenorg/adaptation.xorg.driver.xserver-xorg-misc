@@ -42,7 +42,7 @@ for f in `find %{ARCH}-common/ -name "*.in"`; do
 done
 
 ./autogen.sh
-%configure --with-arch=%{ARCH} --with-conf-prefix=/opt
+%configure --with-arch=%{ARCH}
 
 make %{?jobs:-j%jobs}
 
@@ -50,52 +50,49 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
-#rm -fr %{buildroot}/opt/etc/X11/xorg.conf.d*
-mkdir -p %{buildroot}/etc/rc.d/init.d/
-mkdir -p %{buildroot}/etc/rc.d/rc3.d/
-mkdir -p %{buildroot}/etc/rc.d/rc4.d/
-mkdir -p %{buildroot}/etc/profile.d/
-mkdir -p %{buildroot}/%{_prefix}/etc/X11/
-cp -af %{ARCH}-common/xserver %{buildroot}/etc/rc.d/init.d/
-cp -af %{ARCH}-common/xresources %{buildroot}/etc/rc.d/init.d/
-cp -af %{ARCH}-common/xinitrc %{buildroot}/%{_prefix}/etc/X11/
-ln -sf /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc3.d/S20xserver
-ln -sf /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc4.d/S20xserver
-ln -sf /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc3.d/S80xresources
-ln -sf /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc4.d/S80xresources
-cp -af %{ARCH}-common/Xorg.sh %{buildroot}/etc/profile.d/
-cp -af %{ARCH}-common/Xmodmap %{buildroot}/opt/etc/X11/
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d/
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d/
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc4.d/
+mkdir -p %{buildroot}%{_sysconfdir}/profile.d/
+mkdir -p %{buildroot}/opt/%{_sysconfdir}
+mkdir -p %{buildroot}%{_sysconfdir}/X11/
+ln -sf %{_sysconfdir}/X11 %{buildroot}/opt/%{_sysconfdir}/X11
+cp -af %{ARCH}-common/xserver %{buildroot}%{_sysconfdir}/rc.d/init.d/
+cp -af %{ARCH}-common/xresources %{buildroot}%{_sysconfdir}/rc.d/init.d/
+cp -af %{ARCH}-common/xinitrc %{buildroot}/%{_sysconfdir}/X11/
+ln -sf %{_sysconfdir}/rc.d/init.d/xserver %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S20xserver
+ln -sf %{_sysconfdir}/rc.d/init.d/xserver %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S20xserver
+ln -sf %{_sysconfdir}/rc.d/init.d/xresources %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S80xresources
+ln -sf %{_sysconfdir}/rc.d/init.d/xresources %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S80xresources
+cp -af %{ARCH}-common/Xorg.sh %{buildroot}%{_sysconfdir}/profile.d/
+cp -af %{ARCH}-common/Xmodmap %{buildroot}/%{_sysconfdir}/X11/
 
-cp -rf %{ARCH}-emulfb %{buildroot}/opt/etc/X11/
-mkdir -p %{buildroot}/opt/etc/X11/xorg.conf.d
+cp -rf %{ARCH}-emulfb %{buildroot}/%{_sysconfdir}/X11/
+mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
 
-%post emulfb
-if [ -d /opt/etc/X11/xorg.conf.d ]; then
-    rm -rf /opt/etc/X11/xorg.conf.d
-    ln -sf /opt/etc/X11/xorg.conf.d.default /opt/etc/X11/xorg.conf.d
-fi
-ln -s /opt/etc/X11/%{ARCH}-emulfb/* /opt/etc/X11/  
+ln -s %{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d.default/ %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
 
-%preun emulfb
-rm -f /opt/etc/X11/Xmodmap
-rm -f /opt/etc/X11/xorg.conf.d.*
-
-%post
-chown -R 5000:5000 /opt/etc/X11/Xresources
+mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/Xresources %{buildroot}%{_sysconfdir}/X11/Xresources
+mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/xorg.conf %{buildroot}%{_sysconfdir}/X11/xorg.conf
 
 %files emulfb
 %manifest xorg-x11-server-misc.manifest
-/opt/etc/X11/xorg.conf.d
 %{_sysconfdir}/profile.d/Xorg.sh
 %{_sysconfdir}/rc.d/init.d/*
 %{_sysconfdir}/rc.d/rc3.d/*
 %{_sysconfdir}/rc.d/rc4.d/*
-/opt/etc/X11/Xresources
-/opt/etc/X11/xorg.conf
-%{_prefix}/etc/X11/xinitrc
+%{_sysconfdir}/X11/xinitrc
 %{_bindir}/setcpu
 %{_bindir}/setpoll
 %{_bindir}/startx
-/opt/etc/X11/Xmodmap
-/opt/etc/X11/%{ARCH}-emulfb/*
-
+%config %{_sysconfdir}/X11/Xmodmap
+/opt/%{_sysconfdir}/X11
+%ifarch %{ix86}
+   %{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/dummy
+%else
+   %config %{_sysconfdir}/X11/arm-emulfb/xorg.conf.d.default/display.conf
+   %config %{_sysconfdir}/X11/arm-emulfb/xorg.conf.d.default/input.conf
+%endif
+%{_sysconfdir}/X11/xorg.conf.d
+%config %attr(-,app,app) %{_sysconfdir}/X11/Xresources
+%config %{_sysconfdir}/X11/xorg.conf

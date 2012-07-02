@@ -1,0 +1,18 @@
+* Mon Jul 02 2012 William Douglas <william.douglas@intel.com> bde22db
+- move from /opt/etc to /etc
+
+* Tue May 29 2012 Ryan Ware <ryan.r.ware@intel.com> 2173407
+- Add default Smack manifest for xorg-x11-server-misc.spec
+
+* Sun Apr 29 2012 Kim Kibum <kb0929.kim@samsung.com> 4d68730
+- upload tizen1.0 source
+
+* Tue Feb 21 2012 Sung-Jin Park <sj76.park@samsung.com> 26b7f02
+- update xorg-x11-server-misc.spec file
+- Fix Xmodmap installation problem for arm-emulfb
+
+* Fri Jan 06 2012 Kibum Kim <kb0929.kim@samsung.com> 4ac7e6f
+- Git init
+[ Eunkyoung Kim ]
+- Initial empty repository
+
