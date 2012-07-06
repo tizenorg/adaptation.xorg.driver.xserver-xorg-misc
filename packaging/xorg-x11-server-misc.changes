@@ -1,3 +1,6 @@
+* Fri Jul 06 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> 4ea9cb5
+- Install arch-specific conf files in xorg.conf.d
+
 * Mon Jul 02 2012 William Douglas <william.douglas@intel.com> bde22db
 - move from /opt/etc to /etc
 

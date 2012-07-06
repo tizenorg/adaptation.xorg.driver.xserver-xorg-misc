@@ -68,12 +68,16 @@ cp -af %{ARCH}-common/Xorg.sh %{buildroot}%{_sysconfdir}/profile.d/
 cp -af %{ARCH}-common/Xmodmap %{buildroot}/%{_sysconfdir}/X11/
 
 cp -rf %{ARCH}-emulfb %{buildroot}/%{_sysconfdir}/X11/
-mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
 
-ln -s %{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d.default/ %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
+mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
+mv %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/* %{buildroot}%{_sysconfdir}/X11/xorg.conf.d/
+rm -f %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/dummy
+
+rm -rf %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d
 
 mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/Xresources %{buildroot}%{_sysconfdir}/X11/Xresources
 mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/xorg.conf %{buildroot}%{_sysconfdir}/X11/xorg.conf
+
 
 %files emulfb
 %manifest xorg-x11-server-misc.manifest
@@ -87,12 +91,10 @@ mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/xorg.conf %{buildroot}%{_sy
 %{_bindir}/startx
 %config %{_sysconfdir}/X11/Xmodmap
 /opt/%{_sysconfdir}/X11
-%ifarch %{ix86}
-   %{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/dummy
-%else
-   %config %{_sysconfdir}/X11/arm-emulfb/xorg.conf.d.default/display.conf
-   %config %{_sysconfdir}/X11/arm-emulfb/xorg.conf.d.default/input.conf
-%endif
 %{_sysconfdir}/X11/xorg.conf.d
+%ifarch %{arm}
+   %config %{_sysconfdir}/X11/xorg.conf.d/display.conf
+   %config %{_sysconfdir}/X11/xorg.conf.d/input.conf
+%endif
 %config %attr(-,app,app) %{_sysconfdir}/X11/Xresources
 %config %{_sysconfdir}/X11/xorg.conf
