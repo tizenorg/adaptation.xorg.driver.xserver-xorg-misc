@@ -67,13 +67,10 @@ ln -sf %{_sysconfdir}/rc.d/init.d/xresources %{buildroot}%{_sysconfdir}/rc.d/rc4
 cp -af %{ARCH}-common/Xorg.sh %{buildroot}%{_sysconfdir}/profile.d/
 cp -af %{ARCH}-common/Xmodmap %{buildroot}/%{_sysconfdir}/X11/
 
-cp -rf %{ARCH}-emulfb %{buildroot}/%{_sysconfdir}/X11/
-
 mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
-mv %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/* %{buildroot}%{_sysconfdir}/X11/xorg.conf.d/
-rm -f %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d/dummy
-
-rm -rf %{buildroot}%{_sysconfdir}/X11/%{ARCH}-emulfb/xorg.conf.d
+%ifarch %{arm}
+cp -a arm-emulfb/xorg.conf.d.default/* %{buildroot}/%{_sysconfdir}/X11/xorg.conf.d/
+%endif
 
 mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/Xresources %{buildroot}%{_sysconfdir}/X11/Xresources
 mv %{buildroot}/opt/%{_sysconfdir}%{_sysconfdir}/X11/xorg.conf %{buildroot}%{_sysconfdir}/X11/xorg.conf

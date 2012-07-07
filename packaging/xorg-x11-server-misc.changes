@@ -1,3 +1,6 @@
+* Fri Jul 06 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> 5caa035
+- Fix installation of the .conf files for ARM
+
 * Fri Jul 06 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> 4ea9cb5
 - Install arch-specific conf files in xorg.conf.d
 
