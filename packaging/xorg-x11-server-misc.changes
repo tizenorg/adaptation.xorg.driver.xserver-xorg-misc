@@ -1,3 +1,6 @@
+* Wed Jul 18 2012 Chengwei Yang <chengwei.yang@intel.com> HEAD
+- Fix xorg.conf for IA
+
 * Fri Jul 06 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> 5caa035
 - Fix installation of the .conf files for ARM
 
