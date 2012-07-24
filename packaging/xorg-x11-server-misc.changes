@@ -1,3 +1,7 @@
+* Tue Jul 24 2012 Austin Zhang <austin.zhang@intel.com> - 0.0.1
+- Removed default touchscreen config for IA, instead different
+  products have their own config.
+
 * Fri Jul 20 2012 Peng Li <peng.li@intel.com> - 0.0.1
 - add "-sharevts" parameter for X launch on IA
 
