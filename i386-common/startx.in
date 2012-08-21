@@ -2,7 +2,7 @@
 
 DISPLAY=":0"
 XORG_CONF=" -config @DATADIR@/etc/X11/xorg.conf -configdir /opt/etc/X11/xorg.conf.d "
-OTHER_OPTIONS=" -ac -noreset -r +accessx 0 "
+OTHER_OPTIONS=" -ac -noreset +accessx 0 "
 
 udevadm trigger --subsystem-match=input &
 

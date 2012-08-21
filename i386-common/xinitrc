@@ -9,8 +9,7 @@ if [ -x /usr/bin/xmodmap ]; then
 	fi
 fi
 
-/usr/bin/scim -d
-/usr/bin/system_server &
+/usr/bin/scim -d &
 
 # Link .e
 if [ ! -d ${HOME}/.e ]; then
@@ -27,3 +26,4 @@ if [ -x /usr/bin/xrdb ]; then
 fi
 
 /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &
+/usr/etc/X11/xsetrc &

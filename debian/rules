@@ -47,6 +47,12 @@ config.status: configure
 
 	./configure --prefix=$(PREFIX) $(CONF_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
+build-c110: build-stamp
+	rm -rf $(CURDIR)/debian/tmp/opt/etc/X11/xorg.conf.d*
+
+build-c210: build-stamp
+	rm -rf $(CURDIR)/debian/tmp/opt/etc/X11/xorg.conf.d*
+
 build-emulfb: build-stamp
 	rm -rf $(CURDIR)/debian/tmp/opt/etc/X11/xorg.conf.d*
 
@@ -105,12 +111,23 @@ install-common:
 	cp -af $(CURDIR)/$(ARCH_COMMON)/xserver $(CURDIR)/debian/tmp/etc/rc.d/init.d/
 	cp -af $(CURDIR)/$(ARCH_COMMON)/xresources $(CURDIR)/debian/tmp/etc/rc.d/init.d/
 	cp -af $(CURDIR)/$(ARCH_COMMON)/xinitrc $(CURDIR)/debian/tmp/usr/etc/X11/
+ifneq (,$(findstring arm,$(ARCH)))
+	ln -s /etc/rc.d/init.d/xserver $(CURDIR)/debian/tmp/etc/rc.d/rc3.d/S02xserver
+	ln -s /etc/rc.d/init.d/xserver $(CURDIR)/debian/tmp/etc/rc.d/rc4.d/S02xserver
+else
 	ln -s /etc/rc.d/init.d/xserver $(CURDIR)/debian/tmp/etc/rc.d/rc3.d/S20xserver
 	ln -s /etc/rc.d/init.d/xserver $(CURDIR)/debian/tmp/etc/rc.d/rc4.d/S20xserver
+endif
 	ln -s /etc/rc.d/init.d/xresources $(CURDIR)/debian/tmp/etc/rc.d/rc3.d/S80xresources
 	ln -s /etc/rc.d/init.d/xresources $(CURDIR)/debian/tmp/etc/rc.d/rc4.d/S80xresources
 	cp -af $(CURDIR)/$(ARCH_COMMON)/Xorg.sh $(CURDIR)/debian/tmp/etc/profile.d/
 	-cp -af $(CURDIR)/$(ARCH_COMMON)/Xmodmap $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
+
+install-c110: build-c110 install-common
+	-cp -af $(CURDIR)/$(ARCH)-c110/* $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
+
+install-c210: build-c210 install-common
+	-cp -af $(CURDIR)/$(ARCH)-c210/* $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
 
 install-emulfb: build-emulfb install-common
 	-cp -af $(CURDIR)/$(ARCH)-emulfb/* $(CURDIR)/debian/tmp/opt/etc/X11/ > /dev/null
@@ -118,6 +135,44 @@ install-emulfb: build-emulfb install-common
 # Build architecture-independent files here.
 binary-indep:
 # We have nothing to do by default.
+
+binary-c110: build-c110 install-c110
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples
+	dh_install --sourcedir=debian/tmp -pxserver-xorg-misc-s5pc110
+	dh_installman
+	dh_link
+	#dh_strip
+	dh_compress
+	dh_fixperms
+	-dh_installdeb -pxserver-xorg-misc-s5pc110
+	dh_shlibdeps
+	-dh_gencontrol -pxserver-xorg-misc-s5pc110
+	dh_md5sums
+	-dh_builddeb -pxserver-xorg-misc-s5pc110
+	#-Nxserver-xorg-misc-s5pc210 -Nxserver-xorg-misc-emulfb
+
+binary-c210: build-c210 install-c210
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples
+	dh_install --sourcedir=debian/tmp -pxserver-xorg-misc-s5pc210
+	dh_installman
+	dh_link
+	#dh_strip
+	dh_compress
+	dh_fixperms
+	-dh_installdeb -pxserver-xorg-misc-s5pc210
+	dh_shlibdeps
+	-dh_gencontrol -pxserver-xorg-misc-s5pc210
+	dh_md5sums
+	-dh_builddeb -pxserver-xorg-misc-s5pc210
+	#-Nxserver-xorg-misc-s5pc110 -Nxserver-xorg-misc-emulfb
 
 binary-emulfb: build-emulfb install-emulfb
 	dh_testdir
@@ -136,9 +191,10 @@ binary-emulfb: build-emulfb install-emulfb
 	-dh_gencontrol -pxserver-xorg-misc-emulfb
 	dh_md5sums
 	-dh_builddeb -pxserver-xorg-misc-emulfb
+	#-Nxserver-xorg-misc-s5pc110 -Nxserver-xorg-misc-s5pc210
 
 # Build architecture-dependent files here.
-binary-arch: binary-emulfb
+binary-arch: binary-c110 binary-c210 binary-emulfb
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install

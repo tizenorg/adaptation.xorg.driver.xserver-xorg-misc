@@ -7,7 +7,7 @@ export PATH=/bin:/usr/bin/:/sbin:/usr/sbin
 
 case "$1" in
   start)
-    is_running=`ps | grep -v grep | awk '{ print \$6 }' | grep Xorg` || true
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
     if [ "${is_running}" = "" ]; then                          
         echo "Starting Xorg server..."
         /usr/bin/startx
@@ -17,7 +17,7 @@ case "$1" in
   ;;
 
   restart|reload|force-reload)
-    is_running=`ps | grep -v grep | awk '{ print \$6 }' | grep Xorg` || true
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true                
     if [ "${is_running}" != "" ]; then                                           
         $0 stop || true
         sleep 3
@@ -26,7 +26,7 @@ case "$1" in
   ;;
 
   stop)
-    is_running=`ps | grep -v grep | awk '{ print \$6 }' | grep Xorg` || true
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
     if [ "${is_running}" != "" ]; then                        
         echo "Stopping Xorg server..."
         killall -9 Xorg
@@ -36,7 +36,7 @@ case "$1" in
   ;;
 
   status)
-    is_running=`ps | grep -v grep | awk '{ print \$6 }' | grep Xorg` || true
+    is_running=`ps ax | awk '{ print \$5 }' | grep Xorg` || true
     if [ "${is_running}" = "" ]; then
         echo "Xorg server is not running..."
     else

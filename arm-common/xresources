@@ -11,7 +11,7 @@ case "$1" in
       else
         /usr/bin/xrdb -load -nocpp /opt/etc/X11/Xresources
       fi
-      vconftool set -t int memory/hibernation/xresources_ready 1 -i -f
+      touch /tmp/hibernation/xresources_ready
     fi
   ;;
 
