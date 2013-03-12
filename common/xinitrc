@@ -1,0 +1,23 @@
+#!/bin/sh
+
+/usr/bin/scim -d &
+
+# set dpi
+if [ -x /usr/bin/xrdb ]; then
+	if [ -e ~/.Xresources ]; then
+		/usr/bin/xrdb -load -nocpp ~/.Xresources
+	else
+		/usr/bin/xrdb -load -nocpp /etc/X11/Xresources
+	fi
+fi
+
+# Link .e
+export HOME=/opt/home/app
+
+if [ ! -d ${HOME}/.e ]; then
+	cp -rf /opt/home/root/.e ${HOME}/.e
+	chown -R app:app ${HOME}/.e
+fi
+
+su -c "HOME=/opt/home/app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &" -l app
+

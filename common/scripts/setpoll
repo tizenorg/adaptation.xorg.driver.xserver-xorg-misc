@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$1" = "" ]; then
+	echo "Usage> /usr/bin/setpoll < 0 or 1 >"
+	exit 1
+fi
+
+xinput set-prop "Pointer1" --type=int --format=8 "Evdev Use Poll" $1
