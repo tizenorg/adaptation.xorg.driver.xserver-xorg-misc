@@ -9,7 +9,7 @@
 Name:	    xorg-x11-misc
 Summary:    X.Org X11 X server misc packages
 Version:    0.0.3
-Release:    3
+Release:    5
 Group:      System/X11
 License:    MIT
 Source0:    %{name}-%{version}.tar.gz
@@ -21,6 +21,7 @@ Description: %{summary}
 Summary:    architecture independent set of X11 X server configuration files
 Group:      System/X11
 Requires:   xserver-xorg-core
+Requires:   xorg-x11-drv-evdev-multitouch
 
 %description common
 Set of architecture independent files and scripts for X server
@@ -71,6 +72,7 @@ install -m 644 common/xorg.conf %{buildroot}/etc/X11/xorg.conf
 
 install -m 755 common/Xorg.sh %{buildroot}/etc/profile.d/Xorg.sh
 install -m 755 common/xserver %{buildroot}/etc/rc.d/init.d/xserver
+install -m 755 common/xresources %{buildroot}/etc/rc.d/init.d/xresources
 
 install -m 644 %{ARCH}-common/Xmodmap %{buildroot}/etc/X11/Xmodmap
 install -m 644 %{ARCH}-common/Xresources %{buildroot}/etc/X11/Xresources
@@ -90,6 +92,9 @@ ln -s /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc4.d/S20xserver
 ln -s /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc3.d/S02xserver
 ln -s /etc/rc.d/init.d/xserver %{buildroot}/etc/rc.d/rc4.d/S02xserver
 %endif
+
+ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc3.d/S80xresources
+ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc4.d/S80xresources
 
 cp -Rd conf-%{ARCH}* %{buildroot}/etc/X11/
 
