@@ -10,5 +10,9 @@ if [ ! -d ${HOME}/.e ]; then
 	chown -R app:app ${HOME}/.e
 fi
 
-su -c "HOME=/opt/home/app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &" -l app
+E17_USER=`id -u app`
+E17_GROUP=`id -g app`
+
+HOME=/opt/home/app USER=app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it -user ${E17_USER} -group ${E17_GROUP} &
+#su -c "HOME=/opt/home/app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &" -l app
 
