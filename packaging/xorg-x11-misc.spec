@@ -8,7 +8,7 @@
 
 Name:	    xorg-x11-misc
 Summary:    X.Org X11 X server misc packages
-Version:    0.0.3
+Version:    0.0.4
 Release:    6
 Group:      System/X11
 License:    MIT
