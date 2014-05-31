@@ -1,0 +1,13 @@
+[Unit]
+Description=xserver
+DefaultDependencies=no
+After=opt.mount smack.service smack_pre_labeling_priv.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Environment=EVAS_NO_DRI_SWAPBUF=1
+ExecStart=/usr/bin/startx
+
+[Install]
+WantedBy=basic.target

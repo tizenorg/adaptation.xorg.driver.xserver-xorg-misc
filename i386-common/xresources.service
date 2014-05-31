@@ -1,0 +1,15 @@
+[Unit]
+Description=Xresources
+After=tizen-runtime.target
+Requires=tizen-runtime.target
+ConditionFileIsExecutable=/usr/bin/xrdb
+
+[Service]
+Type=oneshot
+EnvironmentFile=/run/tizen-mobile-env
+ExecStart=/usr/bin/xrdb -load -nocpp /etc/X11/Xresources
+ExecStartPost=/bin/mkdir -p /tmp/hibernation
+ExecStartPost=/bin/touch /tmp/hibernation/xresources_ready
+
+[Install]
+WantedBy=multi-user.target
