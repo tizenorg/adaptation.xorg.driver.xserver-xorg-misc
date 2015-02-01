@@ -1,0 +1,57 @@
+#!/bin/sh
+
+[ -r /etc/X11/Xorg.arch-options ] && . /etc/X11/Xorg.arch-options
+
+DISPLAY=":0"
+LOGDIR="/var/log"
+XORG_CONF=" -config /etc/X11/xorg.conf -configdir /etc/X11/xorg.conf.d "
+OTHER_OPTIONS=" -logfile /var/log/Xorg.0.log -ac -noreset +accessx 0 +dpmsphone $XORG_ARCH_OPTS"
+
+# Xorg automatically preserves logs in $LOGDIR/Xorg.DPY.log.(old)
+
+
+for scriptlet in $(find /etc/X11/arch-preinit.d ! -type d); do
+    test -x "$scriptlet" && . "$scriptlet"
+done
+
+if [ -e /etc/emulator/opengl-es-setup-yagl-env.sh ]; then
+    /etc/emulator/opengl-es-setup-yagl-env.sh
+fi
+
+#remove previous Xorg.0.log file
+if [ -e /var/log/Xorg.0.log ]; then
+    rm /var/log/Xorg.0.log
+fi
+
+#remove previous Xorg.0.log.old file
+if [ -e /var/log/Xorg.0.log.old ]; then
+    rm /var/log/Xorg.0.log.old
+fi
+
+if [ -e ~/.xinitrc ]; then
+    XINITRC=~/.xinitrc
+else
+    XINITRC=/etc/X11/xinitrc
+fi
+
+XSERVER_OPTIONS=" ${DISPLAY} ${OTHER_OPTIONS} ${XORG_CONF} "
+
+if [ "$1" = "--gdb" ]; then
+    /usr/bin/gdb --args /usr/bin/Xorg ${XSERVER_OPTIONS}
+else
+    if [ "$1" = "--only" ]; then
+        export XSERVER_WAIT_MS=100000
+
+        /usr/bin/Xorg ${XSERVER_OPTIONS} &
+    else
+        export WMRC=/etc/X11/wmrc
+        export WMUSERID=`/usr/bin/id -u app`
+        export WMGROUPID=`/usr/bin/id -g app`
+        export WMUSER=app
+        export WMUSERHOME=/opt/home/app
+        export XSERVER_WAIT_MS=100000
+
+        /usr/bin/xinit ${XINITRC} -- /usr/bin/Xorg ${XSERVER_OPTIONS} &
+    fi
+fi
+

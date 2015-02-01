@@ -1,13 +1,13 @@
 [Unit]
 Description=xserver
 DefaultDependencies=no
-After=opt.mount smack.service smack_pre_labeling_priv.service
+After=systemd-udev-trigger.service opt.mount smack-default-labeling.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-Environment=EVAS_NO_DRI_SWAPBUF=1
 ExecStart=/usr/bin/startx
+EnvironmentFile=/run/tizen-mobile-env
 
 [Install]
 WantedBy=basic.target

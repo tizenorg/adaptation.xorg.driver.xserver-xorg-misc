@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+  start|stop|restart|reload|force-reload)
+  # Setting dpi to 72
+    if [ -x /usr/bin/xrdb ]; then
+      if [ -e ~/.Xresources ]; then
+        /usr/bin/xrdb -load -nocpp ~/.Xresources
+      else
+        /usr/bin/xrdb -load -nocpp /etc/X11/Xresources
+      fi
+      mkdir -p /tmp/hibernation
+      touch /tmp/hibernation/xresources_ready
+    fi
+  ;;
+
+  status)
+    if [ -x /usr/bin/xrdb ]; then
+      /usr/bin/xrdb -query -nocpp
+    fi
+  ;;
+
+  *)
+    echo "Usage: /etc/init.d/xresource {start|stop|status|restart|reload|force-reload}"
+    exit 1
+    ;;
+esac
+
+exit 0

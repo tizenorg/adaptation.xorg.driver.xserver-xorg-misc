@@ -1,0 +1,14 @@
+#!/bin/sh
+
+/usr/bin/scim -d &
+/usr/bin/xmodmap /etc/X11/Xmodmap
+
+# set dpi
+if [ -x /usr/bin/xrdb ]; then
+    if [ -e ~/.Xresources ]; then
+        /usr/bin/xrdb -load -nocpp ~/.Xresources
+    else
+        /usr/bin/xrdb -load -nocpp /etc/X11/Xresources
+    fi
+fi
+
