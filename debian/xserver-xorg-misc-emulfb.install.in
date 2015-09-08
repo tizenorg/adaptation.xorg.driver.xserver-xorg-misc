@@ -1,7 +1,0 @@
-@PREFIX@/bin/*
-@PREFIX@/etc/X11/*
-@DATADIR@/etc/X11/*
-etc/rc.d/init.d/*
-etc/rc.d/rc3.d/*
-etc/rc.d/rc4.d/*
-etc/profile.d/*

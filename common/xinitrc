@@ -1,0 +1,18 @@
+#!/bin/sh
+
+/usr/bin/scim -d &
+
+# Link .e
+export HOME=/opt/home/app
+
+if [ ! -d ${HOME}/.e ]; then
+	cp -rf /opt/home/root/.e ${HOME}/.e
+	chown -R app:app ${HOME}/.e
+fi
+
+E17_USER=`id -u app`
+E17_GROUP=`id -g app`
+
+HOME=/opt/home/app USER=app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it -user ${E17_USER} -group ${E17_GROUP} &
+#su -c "HOME=/opt/home/app /usr/bin/enlightenment_start -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it &" -l app
+

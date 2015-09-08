@@ -7,11 +7,10 @@ case "$1" in
   # Setting dpi to 72
     if [ -x /usr/bin/xrdb ]; then
       if [ -e ~/.Xresources ]; then
-        /usr/bin/xrdb -load -nocpp ~/.Xresources
+		/usr/bin/xrdb -load -nocpp ~/.Xresources
       else
         /usr/bin/xrdb -load -nocpp /etc/X11/Xresources
       fi
-      mkdir -p /tmp/hibernation
       touch /tmp/hibernation/xresources_ready
     fi
   ;;
