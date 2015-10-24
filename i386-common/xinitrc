@@ -1,8 +1,5 @@
 #!/bin/sh
 
-/usr/bin/scim -d &
-/usr/bin/xmodmap /etc/X11/Xmodmap
-
 # set dpi
 if [ -x /usr/bin/xrdb ]; then
     if [ -e ~/.Xresources ]; then

@@ -8,7 +8,7 @@
 
 Name:	    xorg-x11-misc
 Summary:    X.Org X11 X server misc packages
-Version:    0.0.12
+Version:    0.0.22
 Release:    1
 Group:      System/X11
 License:    MIT
@@ -21,7 +21,6 @@ Description: %{summary}
 Summary:    architecture independent set of X11 X server configuration files
 Group:      System/X11
 Requires:   xserver-xorg-core
-Requires:   xorg-x11-drv-evdev-multitouch
 
 %description common
 Set of architecture independent files and scripts for X server
@@ -50,6 +49,7 @@ Xorg server misc package which contains device specific configuration files
 %setup -q
 
 %install
+
 mkdir -p %{buildroot}/usr/share/license
 cp -af COPYING %{buildroot}/usr/share/license/%{name}-emulfb
 
@@ -81,7 +81,6 @@ install -m 644 common/xorg.conf %{buildroot}/etc/X11/xorg.conf
 install -m 755 common/Xorg.sh %{buildroot}/etc/profile.d/Xorg.sh
 install -m 755 common/xserver %{buildroot}/etc/rc.d/init.d/xserver
 
-install -m 644 %{ARCH}-common/Xmodmap %{buildroot}/etc/X11/Xmodmap
 install -m 644 %{ARCH}-common/Xresources %{buildroot}/etc/X11/Xresources
 install -m 644 %{ARCH}-common/Xorg.arch-options %{buildroot}/etc/X11/Xorg.arch-options
 install -m 755 %{ARCH}-common/xsetrc %{buildroot}/etc/X11/xsetrc
@@ -104,13 +103,6 @@ ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc3.d/S80xresources
 ln -s /etc/rc.d/init.d/xresources %{buildroot}/etc/rc.d/rc4.d/S80xresources
 %if "%{?tizen_profile_name}" == "wearable"
 cp -Rd conf-%{ARCH}-emulfb-wearable %{buildroot}/etc/X11/conf-%{ARCH}-emulfb
-  %if "%{ARCH}" == "i386"
-    %if "%{?_repository}" == "emulator-circle"
-    mv %{buildroot}/etc/X11/conf-%{ARCH}-emulfb/input.conf.wc1 %{buildroot}/etc/X11/conf-%{ARCH}-emulfb/input.conf
-    %else
-    rm %{buildroot}/etc/X11/conf-%{ARCH}-emulfb/input.conf.wc1
-    %endif
-  %endif
 %else
 cp -Rd conf-%{ARCH}-emulfb-mobile %{buildroot}/etc/X11/conf-%{ARCH}-emulfb
 %endif
@@ -126,6 +118,19 @@ install -m 0644 %{ARCH}-common/xresources.service %{buildroot}%{_libdir}/systemd
 ln -s ../xresources.service %{buildroot}%{_libdir}/systemd/system/multi-user.target.wants/xresources.service
 %endif
 
+mkdir -p %{buildroot}/opt/var/xkb
+%if "%{?tizen_profile_name}" == "mobile"
+  cp -rf arm-common/tizen_layout_mobile.txt %{buildroot}/opt/var/xkb/tizen_key_layout_temp.txt
+%else
+  %if "%{?tizen_profile_name}" == "wearable"
+    cp -rf arm-common/tizen_layout_wearable.txt %{buildroot}/opt/var/xkb/tizen_key_layout_temp.txt
+  %else
+    %if "%{?tizen_profile_name}" == "tv"
+      cp -rf arm-common/tizen_layout_tv.txt %{buildroot}/opt/var/xkb/tizen_key_layout_temp.txt
+    %endif
+  %endif
+%endif
+
 # arm/i386 emulfb
 
 %post emulfb
@@ -138,6 +143,7 @@ for i in /etc/X11/conf-%{ARCH}-emulfb/*; do
 done
 
 %files common
+%manifest xorg-x11-misc-common.manifest
 /usr/bin/startx
 /usr/bin/setcpu
 /usr/bin/setpoll
@@ -147,10 +153,10 @@ done
 /etc/rc.d/rc3.d/*
 /etc/rc.d/rc4.d/*
 /etc/X11/xorg.conf
-
+/opt/var/xkb/tizen_key_layout_temp.txt
 
 %files %{ARCH}-common
-/etc/X11/Xmodmap
+%manifest xorg-x11-misc-%{ARCH}-common.manifest
 /etc/X11/Xresources
 %attr(755,root,root) /etc/X11/xsetrc
 /etc/X11/Xorg.arch-options

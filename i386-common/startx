@@ -4,7 +4,7 @@
 
 DISPLAY=":0"
 LOGDIR="/var/log"
-XORG_CONF=" -config /etc/X11/xorg.conf -configdir /etc/X11/xorg.conf.d "
+XORG_CONF=" -config /etc/X11/xorg.conf -configdir /etc/X11/xorg.conf.d -nolisten tcp "
 OTHER_OPTIONS=" -logfile /var/log/Xorg.0.log -ac -noreset +accessx 0 +dpmsphone $XORG_ARCH_OPTS"
 
 # Xorg automatically preserves logs in $LOGDIR/Xorg.DPY.log.(old)

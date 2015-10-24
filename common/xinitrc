@@ -1,7 +1,5 @@
 #!/bin/sh
 
-/usr/bin/scim -d &
-
 # Link .e
 export HOME=/opt/home/app
 

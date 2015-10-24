@@ -8,8 +8,6 @@ ConditionFileIsExecutable=/usr/bin/xrdb
 Type=oneshot
 EnvironmentFile=/run/tizen-mobile-env
 ExecStart=/usr/bin/xrdb -load -nocpp /etc/X11/Xresources
-ExecStartPost=/bin/mkdir -p /tmp/hibernation
-ExecStartPost=/bin/touch /tmp/hibernation/xresources_ready
 
 [Install]
 WantedBy=multi-user.target

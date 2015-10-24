@@ -7,7 +7,7 @@ After=systemd-udev-trigger.service opt.mount smack-default-labeling.service
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/startx
-EnvironmentFile=-/run/tizen-mobile-env
+EnvironmentFile=/run/tizen-mobile-env
 
 [Install]
 WantedBy=basic.target

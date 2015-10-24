@@ -1,0 +1,129 @@
+XF86Back 1
+1 2 keyboard
+2 3 keyboard
+3 4 keyboard
+4 5 keyboard
+5 6 keyboard
+6 7 keyboard
+7 8 keyboard
+8 9 keyboard
+9 10 keyboard
+0 11 keyboard
+minus 12 keyboard
+Return 28 keyboard
+XF86Red 59
+XF86Green 60
+XF86Yellow 61
+XF86Blue 62
+XF86Home 63
+XF86Display 64
+XF86ChannelList 65
+XF86AudioMute 66
+XF86AudioLowerVolume 67
+XF86AudioRaiseVolume 68
+XF86LowerChannel 87
+XF86RaiseChannel 88
+Up 103 keyboard
+Left 105 keyboard
+Right 106 keyboard
+Down 108 keyboard
+XF86PowerOff 116
+XF86SysMenu 125
+XF86SimpleMenu 127
+XF86MBRRepeat 129
+XF86ChannelGuide 130
+XF86PictureSize 132
+XF86PictureMode 133
+XF86Hdmi 135
+XF86UsbHub 136
+XF86EManual 138
+XF86More 140
+XF86FactoryMode 141
+XF86Sleep 142
+XF86TV 145
+XF86DTV 146
+XF86STBPower 147
+XF86ChannelAddDel 148
+XF86PanelDown 149
+XF86WWW 150
+XF86BTColorMecha 151
+XF86StillPicture 152
+XF86BTPairing 153
+XF86BTHotkey 154
+XF86CinemaMode 155
+XF86BTContentsBar 156
+XF86Game 157
+XF86PIPChannelUp 159
+XF86PIPChannelDown 160
+XF86Antena 161
+XF86ChannelAutoTune 162
+XF86PanelEnter 163
+XF86MBRLink 164
+XF86PanelUp 165
+XF86AudioStop 166
+XF86AudioRecord 167
+XF86AudioRewind 168
+XF86Game3D 169
+XF86WheelLeftKey 170
+XF86WheelRightKey 171
+XF86PanelExit 173
+XF86Exit 174
+XF86MBRTV 175
+XF86MBRSTBGuide 176
+XF86MBRBDPopup 177
+XF86MBRBDDVDPower 178
+XF86MBRSetupFailure 179
+XF86MBRSetup 180
+XF86MBRWatchTV 181
+XF86PreviousChannel 182
+XF86FavoriteChannel 183
+XF86Recommend 184
+XF86NumberPad 185
+XF86AspectRatio169 186
+XF86MTS 187
+XF86Info 188
+XF86SoundMode 189
+XF863XSpeed 190
+XF863D 191
+XF86TTXMIX 192
+XF86SRSSXT 193
+XF86WIFIPairing 194
+XF86AudioPlay 200
+XF86AudioPause 201
+XF86DualView 202
+XF86BTApps 203
+XF86FamilyMode 204
+XF86EnergySaving 205
+XF86MBRClear 206
+XF86Subtitle 207
+XF86AudioNext 208
+XF86TVSNS 209
+XF86DVR 210
+XF86Apps 211
+XF86Camera 212
+XF86Caption 213
+XF86ZoomIn 214
+XF86PanelPlus 215
+XF86BTVoice 216
+XF86Search 217
+XF86PanelMinus 219
+XF86SoccerMode 220
+XF86Amazon 221
+XF86AudioDescription 222
+XF86PreviousChapter 224
+XF86NextChapter 225
+XF86Netflix 226
+XF86PIP 227
+XF86MBRWatchMovie 228
+XF86MBRMenu 229
+XF86MBRConfirm 230
+XF86FamilyHub 231
+XF86HDMICEC 232
+XF86BTDevice 233
+XF86SoftWakeup 236
+XF86Wakeup 238
+XF86LeftPage 241
+XF86RightPage 242
+XF86PanelOn 243
+XF86PlayBack 244
+XF86ExtraApp 245

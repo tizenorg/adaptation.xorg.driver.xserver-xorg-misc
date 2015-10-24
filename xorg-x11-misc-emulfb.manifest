@@ -2,4 +2,13 @@
 	<request>
 		<domain name="xorg"/>
 	</request>
+	<assign>
+		<filesystem path="/etc/X11/conf-i386-emulfb/display.conf" label="_" exec_label="none" />
+		<filesystem path="/etc/X11/conf-i386-emulfb/input.conf" label="_" exec_label="none" />
+		<filesystem path="/etc/X11/conf-i386-emulfb/module.conf" label="_" exec_label="none" />
+
+		<filesystem path="/etc/X11/conf-arm-emulfb/display.conf" label="_" exec_label="none" />
+		<filesystem path="/etc/X11/conf-arm-emulfb/input.conf" label="_" exec_label="none" />
+		<filesystem path="/etc/X11/conf-arm-emulfb/module.conf" label="_" exec_label="none" />
+	</assign>
 </manifest>
